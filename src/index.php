@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('vendor/autoload.php');
 require_once('config/config.php');
 
@@ -48,12 +49,18 @@ $controladorObjeto = new $controladorNamespace();
  * 
  * Al final, tan solo tenemos que hacer el "include_once" o el "require_once" con la vista.
  *********************************************************************************************************************/
+
+use dwesgram\utilidades\Sesion;
+
+$sesion = new Sesion();
+
 $accion = strtolower($accion);
 $datosParaVista['datos'] = [];
 if (!method_exists($controladorObjeto, $accion)) {
     echo "No existe el método $accion para el controlador $controladorNamespace";
     exit();
 }
+
 
 $datosParaVista['datos'] = $controladorObjeto->$accion();
 
