@@ -9,14 +9,15 @@ class Entrada extends Modelo
 
 {
     private array $errores = [];
-
+ 
     public function __construct(
         private string|null $texto,
         private int|null $id = null,
         private string|null $imagen = null,
         private int|null $autor = null,
         private string|null $nombreAutor = null,
-        private int|null $creado = null
+        private int|null $creado = null,
+        private int|null $megustas = null
     ) {
         $this->errores = [
             'texto' => $texto === null || empty($texto) ? 'El texto no puede estar vacío' : null,
@@ -24,6 +25,7 @@ class Entrada extends Modelo
             //'autor' => null,
             //'creado' => null,
         ];
+        
     }
     public function validarImagenDesdePost(array $files): bool
     {
@@ -107,5 +109,12 @@ class Entrada extends Modelo
     public function getErrores(): array
     {
         return $this->errores;
+    }
+    public function getMegustas(): int
+    {
+        return $this->megustas;
+    }
+    public function setMegustas(int $id){
+        $this->megustas = $id;
     }
 }

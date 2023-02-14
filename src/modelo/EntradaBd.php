@@ -22,8 +22,10 @@ class EntradaBd
                 while (($fila = $queryResultado->fetch_assoc()) != null) {
                     //segunda consulta para obtener el nombre del autor
                     $queryResultado2 = $conexion->query("Select nombre from usuario u join entrada e where u.id='{$fila['autor']}' ");
+
                     if ($queryResultado2 !== false) {
                         $fila2 = $queryResultado2->fetch_assoc();
+
                         $entrada = new ModeloEntrada(
                             id: $fila['id'],
                             texto: $fila['texto'],
@@ -31,7 +33,15 @@ class EntradaBd
                             autor: $fila['autor'],
                             nombreAutor: $fila2['nombre'],
                             creado: $fila['creado'],
+
                         );
+                        //tercera query para obtener el numer de likes, esta dentro del anterior if, ya que este no tiene por que tener likes
+                        $queryResultado3 = $conexion->query("select entrada, count(usuario) from megusta where entrada = '{$fila['id']}' ");
+                        if ($queryResultado3 != false) {
+                            $fila3 = $queryResultado3->fetch_assoc();
+                            $entrada->setMegustas($fila3['count(usuario)']);
+                        }
+
                         $resultado[] = $entrada;
                     }
                 }
@@ -63,7 +73,7 @@ class EntradaBd
                 $queryResultado2 = $conexion->query("Select nombre from usuario u join entrada e where u.id='{$fila['autor']}' ");
                 if ($queryResultado2 !== false) {
                     $fila2 = $queryResultado2->fetch_assoc();
-                    return new ModeloEntrada(
+                    $entrada = new ModeloEntrada(
                         id: $fila['id'],
                         texto: $fila['texto'],
                         imagen: $fila['imagen'],
@@ -72,6 +82,15 @@ class EntradaBd
                         creado: $fila['creado'],
 
                     );
+                    //tercera query para obtener el numer de likes, esta dentro del anterior if, ya que este no tiene por que tener likes
+                    $queryResultado3 = $conexion->query("select entrada, count(usuario) from megusta where entrada = '{$fila['id']}' ");
+                    if ($queryResultado3 != false) {
+                        $fila3 = $queryResultado3->fetch_assoc();
+                        $entrada->setMegustas($fila3['count(usuario)']);
+                    }
+
+                    return $entrada;
+                    
                 }
             }
         } catch (\Exception $e) {
