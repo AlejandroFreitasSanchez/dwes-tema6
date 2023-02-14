@@ -15,7 +15,7 @@ if (!empty($datosParaVista['datos'])) {
         <div class="col-sm-6 col-md-2">
             <div class="thumbnail">
                 <p><b>Escrito por <?= $nombreAutor ?></b></p>
-                <img src="<?= $img  ?>">
+                <img src="<?= $img  ?> "width=150 height=150>
                 <div class="caption">
 
                     <p><?= $texto ?></p>

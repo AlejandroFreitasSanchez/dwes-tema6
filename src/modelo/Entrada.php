@@ -30,7 +30,9 @@ class Entrada extends Modelo
     public function validarImagenDesdePost(array $files): bool
     {
         if (
-            $files && isset($files['imagen']) && $files['imagen']['error'] === UPLOAD_ERR_OK
+            $files && isset($files['imagen']) &&
+            $files['imagen']['error'] === UPLOAD_ERR_OK
+           
         ) {
             $nombreFichero = $files && isset($files['imagen']) ? $files['imagen']['name'] : null;
             //ruta donde se guardará la imagen
@@ -52,7 +54,7 @@ class Entrada extends Modelo
             }
         }
         // en este caso, es que no se ha seleccionado ninguna imagen, ya que es opcional
-        $this->setImagen("imagenes/pordefecto.webp");
+        $this->setImagen("imagenes/pordefecto.png");
 
         return true;
     }

@@ -41,7 +41,7 @@ class EntradaControlador extends Controlador
         $creado = time();
         $entrada = new Entrada(texto: $texto, creado: $creado);
 
-        //valida que la imagen sea valida
+        //comprueba las posibles opciones que pueda tener imagen
         if ($entrada->validarImagenDesdePost($_FILES) === false) {
             $this->vista = 'entrada/nuevo';
             return $entrada;
@@ -72,7 +72,7 @@ class EntradaControlador extends Controlador
         $this->vista = 'entrada/eliminar';
         $id = $_GET && isset($_GET['id']) ? $_GET['id'] : null;
         $entrada = EntradaBd::getEntrada($id);
-
+        $imagen = $entrada->getImagen();
         //si el usuario no ha escrito la entrada e intenta borrarla
         if ($entrada->getNombreAutor() != $_SESSION['usuario']['nombre']) {
             return false;
@@ -80,6 +80,10 @@ class EntradaControlador extends Controlador
 
         //si el id no es nulo, la elimina
         if ($id != null) {
+            //se borra la imagen si existe y no es la por defecto
+            if (file_exists($imagen) && $imagen != "imagenes/pordefecto.png") {
+                unlink($imagen);
+            }
             return EntradaBd::eliminar($id);
         } else {
             return false;

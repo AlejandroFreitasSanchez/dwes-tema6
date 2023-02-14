@@ -18,7 +18,7 @@ if (!empty($datosParaVista['datos']) && $datosParaVista['datos'] != null) {
                 <h2>Escrito por: <?= $nombreAutor ?></h2>
                 <?php
                 if ($img != null) {
-                    echo "<img src=$img width=500 height=500>";
+                    echo "<img src=$img width=300 height=300>";
                 }
                 ?>
                 <div class="caption">
