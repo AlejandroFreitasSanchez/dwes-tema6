@@ -1,6 +1,7 @@
 <?php
 
 if (!empty($datosParaVista['datos']) && $datosParaVista['datos'] != null) {
+    //datos necesarios para la vista
     $entrada = $datosParaVista['datos'];
     $texto = $entrada->getTexto();
     $id = $entrada->getId();
@@ -11,7 +12,7 @@ if (!empty($datosParaVista['datos']) && $datosParaVista['datos'] != null) {
     $nombreAutor = $entrada->getNombreAutor();
     $megustas = $entrada->getMegustas();
     $comentarios = $entrada->getComentarios();
-    //var_dump($comentarios)
+  
 ?>
 
     <div class='row' style='padding: 20px;'>
