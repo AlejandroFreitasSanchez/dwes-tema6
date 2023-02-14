@@ -60,6 +60,7 @@ class EntradaBd
     {
         try {
             $conexion = BaseDatos::getConexion();
+
             //primera consulta para obtener la entrada
             $sentencia = $conexion->prepare("select id, texto, imagen, autor, creado from Entrada where id=?");
             $sentencia->bind_param('i', $id);
@@ -88,9 +89,18 @@ class EntradaBd
                         $fila3 = $queryResultado3->fetch_assoc();
                         $entrada->setMegustas($fila3['count(usuario)']);
                     }
+                    //cuearta query para obtener los comentarios si hubiese;
+                    $queryResultado4 = $conexion->query("select u.nombre, c.usuario, c.comentario from comentario c join usuario u on u.id=c.usuario where c.entrada = '{$fila['id']}' order by c.id");
+                    if ($queryResultado4 != false) {
+                        $comentarios = [];
+                        while (($fila4 = $queryResultado4->fetch_assoc()) != null) {
+                            $comentarios[] = ['texto' => $fila4['comentario'], 'usuario' => $fila4['nombre']];
+                        }
 
+                        $entrada->setComentarios($comentarios);
+                    }
+                    //devuelve la entrada
                     return $entrada;
-                    
                 }
             }
         } catch (\Exception $e) {

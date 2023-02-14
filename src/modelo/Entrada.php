@@ -9,7 +9,7 @@ class Entrada extends Modelo
 
 {
     private array $errores = [];
- 
+    private array $comentarios = [];
     public function __construct(
         private string|null $texto,
         private int|null $id = null,
@@ -25,6 +25,7 @@ class Entrada extends Modelo
             //'autor' => null,
             //'creado' => null,
         ];
+        $this->comentarios = [];
         
     }
     public function validarImagenDesdePost(array $files): bool
@@ -119,4 +120,12 @@ class Entrada extends Modelo
     public function setMegustas(int $id){
         $this->megustas = $id;
     }
+    public function getComentarios(): array
+    {
+        return $this->comentarios;
+    }
+    public function setComentarios(array|null $c){
+        $this->comentarios['comentarios'] = $c;
+    }
+
 }
