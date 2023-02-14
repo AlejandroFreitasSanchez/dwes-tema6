@@ -81,7 +81,7 @@ class MegustaControlador extends Controlador
         //se inserta en la base de datos
         $id = MegustaBd::darMeGusta($megusta);
 
-        //devuelve a la vista  de lista de entradas, por lo que se llama al metodo getEntradas
+        //devuelve a la vista  de detalle de entrada, por lo que se llama al metodo getEntrada
         $this->vista = "entrada/detalle";
         return EntradaBd::getEntrada($idEntrada);
     }
